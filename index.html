@@ -17,7 +17,7 @@
             --gold-text: #fcf6ba;
         }
         * { box-sizing: border-box; font-family: 'Tajawal', sans-serif; }
-        body { margin: 0; background: #0f0101; color: white; overflow-x: hidden; text-align: center; }
+        body { margin: 0; background: #0f0101; color: white; overflow-x: hidden; text-align: center; width: 100%; }
         
         .bg-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
         .star { position: absolute; background: white; border-radius: 50%; opacity: 0.3; animation: twinkle var(--d) infinite; }
@@ -66,19 +66,28 @@
             100% { transform: scale(1) translateY(0); box-shadow: 0 0 15px rgba(255, 20, 147, 0.3); }
         }
 
-        /* --- تعديل الاستوري ليدعم السحب --- */
-        .stories-container {
-            display: flex; 
-            justify-content: flex-start; 
-            gap: 15px; 
-            margin: 20px 0 40px 0;
-            padding: 10px 20px; 
-            overflow-x: auto; 
+        /* --- حل مشكلة عرض الاستوري بالكامل --- */
+        .stories-wrapper {
+            width: 100vw;
+            position: relative;
+            left: 50%;
+            right: 50%;
+            margin-left: -50vw;
+            margin-right: -50vw;
+            overflow-x: auto;
             scrollbar-width: none;
             -webkit-overflow-scrolling: touch;
-            width: 100%;
+            margin-bottom: 40px;
         }
-        .stories-container::-webkit-scrollbar { display: none; }
+        .stories-wrapper::-webkit-scrollbar { display: none; }
+
+        .stories-container {
+            display: inline-flex; 
+            padding: 10px 20px; 
+            gap: 15px;
+        }
+        /* ------------------------------------- */
+
         .story-item { flex: 0 0 auto; display: flex; flex-direction: column; align-items: center; cursor: pointer; }
         .story-ring {
             width: 75px; height: 75px; border-radius: 50%;
@@ -118,7 +127,7 @@
         .custom-msg-box.show { transform: translate(-50%, -50%) scale(1); }
         .msg-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: none; z-index: 10001; }
 
-        section { min-height: 100vh; display: none; flex-direction: column; align-items: center; justify-content: center; padding: 20px; position: relative; z-index: 2; }
+        section { min-height: 100vh; display: none; flex-direction: column; align-items: center; justify-content: center; padding: 20px; position: relative; z-index: 2; width: 100%; }
         .active { display: flex; }
 
         .glass-box { background: var(--glass); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.15); border-radius: 40px; padding: 35px 20px; width: 95%; max-width: 420px; box-shadow: 0 25px 50px rgba(0,0,0,0.7); position: relative; }
@@ -341,23 +350,31 @@
             <h3 style="color: var(--pink-glow); font-weight: 800; margin-bottom: 25px;"> Surprise 👀</h3>
             <div class="cards-container">
                 <div class="flip-card" onclick="this.classList.toggle('flipped')">
-                    <div class="card-front">دوسي متخافيش..😂</div>
-                    <div class="card-back">ع فكره مش بحب اشوفك زعلانه!</div>
+                    <div class="flip-card-inner">
+                        <div class="card-front">دوسي متخافيش..😂</div>
+                        <div class="card-back">ع فكره مش بحب اشوفك زعلانه!</div>
+                    </div>
                 </div>
                 <div class="flip-card" onclick="this.classList.toggle('flipped')">
-                    <div class="card-front">فاكرة اول يوم اتقابلنا!..</div>
-                    <div class="card-back">24/6/24<br>كانت اول لحظه نشوف بعض فيها فاكراها!.. 😍</div>
+                    <div class="flip-card-inner">
+                        <div class="card-front">فاكرة اول يوم اتقابلنا!..</div>
+                        <div class="card-back">24/6/24<br>كانت اول لحظه نشوف بعض فيها فاكراها!.. 😍</div>
+                    </div>
                 </div>
                 <div class="flip-card" onclick="this.classList.toggle('flipped')">
-                    <div class="card-front">دوسي بقا🤨</div>
-                    <div class="card-back">بحبك ي غباء..😂</div>
+                    <div class="flip-card-inner">
+                        <div class="card-front">دوسي بقا🤨</div>
+                        <div class="card-back">بحبك ي غباء..😂</div>
+                    </div>
                 </div>
                 <div class="flip-card" onclick="handleVoiceRecord('recVoice', this)">
-                    <div class="card-front">دوسي لو حابه تسمعي🙃</div>
-                    <div class="card-back" style="flex-direction: column;">
-                        <div class="pulse-heart">❤️</div>
-                        <p style="margin:0; font-size: 12px; color: var(--pink-glow);">سيديهات دي👀😂</p>
-                        <audio id="recVoice"><source src="mk.mp3" type="audio/mpeg"></audio>
+                    <div class="flip-card-inner">
+                        <div class="card-front">دوسي لو حابه تسمعي🙃</div>
+                        <div class="card-back" style="flex-direction: column;">
+                            <div class="pulse-heart">❤️</div>
+                            <p style="margin:0; font-size: 12px; color: var(--pink-glow);">سيديهات دي👀😂</p>
+                            <audio id="recVoice"><source src="mk.mp3" type="audio/mpeg"></audio>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -380,38 +397,40 @@
             <span style="font-size: 15px; font-weight: 800; color: #fff;">دوسي هنا🫵🏻</span>
         </div>
 
-        <div class="stories-container">
-            <div class="story-item" onclick="openStory('m6')">
-                <div class="story-ring"><div class="story-img-box"><img src="m6"></div></div>
-                <div class="story-date-tag">27/11/2024</div>
-            </div>
-            <div class="story-item" onclick="openStory('m7')">
-                <div class="story-ring"><div class="story-img-box"><img src="m7"></div></div>
-                <div class="story-date-tag">16/8/2025</div>
-            </div>
-            <div class="story-item" onclick="openStory('m8')">
-                <div class="story-ring"><div class="story-img-box"><img src="m8"></div></div>
-                <div class="story-date-tag">18/1/2026</div>
-            </div>
-            <div class="story-item" onclick="openStory('m9')">
-                <div class="story-ring"><div class="story-img-box"><img src="m9"></div></div>
-                <div class="story-date-tag">27/3/2026</div>
-            </div>
-            <div class="story-item" onclick="openStory('m10')">
-                <div class="story-ring"><div class="story-img-box"><img src="m10"></div></div>
-                <div class="story-date-tag">أجمل لحظة</div>
-            </div>
-            <div class="story-item" onclick="openStory('m11')">
-                <div class="story-ring"><div class="story-img-box"><img src="m11"></div></div>
-                <div class="story-date-tag">ضحكتنا..💖</div>
-            </div>
-            <div class="story-item" onclick="openStory('m12')">
-                <div class="story-ring"><div class="story-img-box"><img src="m12"></div></div>
-                <div class="story-date-tag">سوا دايماً</div>
-            </div>
-            <div class="story-item" onclick="openStory('m13')">
-                <div class="story-ring"><div class="story-img-box"><img src="m13"></div></div>
-                <div class="story-date-tag">القمر 👀</div>
+        <div class="stories-wrapper">
+            <div class="stories-container">
+                <div class="story-item" onclick="openStory('m6')">
+                    <div class="story-ring"><div class="story-img-box"><img src="m6"></div></div>
+                    <div class="story-date-tag">27/11/2024</div>
+                </div>
+                <div class="story-item" onclick="openStory('m7')">
+                    <div class="story-ring"><div class="story-img-box"><img src="m7"></div></div>
+                    <div class="story-date-tag">16/8/2025</div>
+                </div>
+                <div class="story-item" onclick="openStory('m8')">
+                    <div class="story-ring"><div class="story-img-box"><img src="m8"></div></div>
+                    <div class="story-date-tag">18/1/2026</div>
+                </div>
+                <div class="story-item" onclick="openStory('m9')">
+                    <div class="story-ring"><div class="story-img-box"><img src="m9"></div></div>
+                    <div class="story-date-tag">27/3/2026</div>
+                </div>
+                <div class="story-item" onclick="openStory('m10')">
+                    <div class="story-ring"><div class="story-img-box"><img src="m10"></div></div>
+                    <div class="story-date-tag">أجمل لحظة</div>
+                </div>
+                <div class="story-item" onclick="openStory('m11')">
+                    <div class="story-ring"><div class="story-img-box"><img src="m11"></div></div>
+                    <div class="story-date-tag">ضحكتنا..💖</div>
+                </div>
+                <div class="story-item" onclick="openStory('m12')">
+                    <div class="story-ring"><div class="story-img-box"><img src="m12"></div></div>
+                    <div class="story-date-tag">سوا دايماً</div>
+                </div>
+                <div class="story-item" onclick="openStory('m13')">
+                    <div class="story-ring"><div class="story-img-box"><img src="m13"></div></div>
+                    <div class="story-date-tag">القمر 👀</div>
+                </div>
             </div>
         </div>
 
