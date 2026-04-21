@@ -66,9 +66,17 @@
             100% { transform: scale(1) translateY(0); box-shadow: 0 0 15px rgba(255, 20, 147, 0.3); }
         }
 
+        /* --- تعديل الاستوري ليدعم السحب --- */
         .stories-container {
-            display: flex; justify-content: center; gap: 15px; margin: 20px 0 40px 0;
-            padding: 10px; overflow-x: auto; scrollbar-width: none;
+            display: flex; 
+            justify-content: flex-start; 
+            gap: 15px; 
+            margin: 20px 0 40px 0;
+            padding: 10px 20px; 
+            overflow-x: auto; 
+            scrollbar-width: none;
+            -webkit-overflow-scrolling: touch;
+            width: 100%;
         }
         .stories-container::-webkit-scrollbar { display: none; }
         .story-item { flex: 0 0 auto; display: flex; flex-direction: column; align-items: center; cursor: pointer; }
@@ -222,7 +230,6 @@
             animation: smooth-pulse-silver 2.5s infinite ease-in-out;
         }
 
-        /* --- التعديل المطلوب لزر الوردة --- */
         .royal-flower-btn {
             position: relative;
             background: linear-gradient(135deg, rgba(255, 133, 162, 0.2), rgba(255, 20, 147, 0.2)) !important;
@@ -245,7 +252,6 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* منع تغير اللون عند الضغط (Active) وجعله يلمع أكثر */
         .royal-flower-btn:active, .royal-flower-btn:focus {
             background: linear-gradient(135deg, rgba(255, 133, 162, 0.3), rgba(255, 20, 147, 0.3)) !important;
             border-color: var(--pink-glow) !important;
@@ -269,7 +275,6 @@
             animation: btn-shimmer 3s infinite;
         }
         @keyframes btn-shimmer { 0%, 100% { opacity: 0.3; transform: translate(-50%, -50%) scale(1); } 50% { opacity: 0.6; transform: translate(-50%, -50%) scale(1.2); } }
-        /* ---------------------------------- */
 
         .whatsapp-bubble-container {
             position: relative;
@@ -391,6 +396,22 @@
             <div class="story-item" onclick="openStory('m9')">
                 <div class="story-ring"><div class="story-img-box"><img src="m9"></div></div>
                 <div class="story-date-tag">27/3/2026</div>
+            </div>
+            <div class="story-item" onclick="openStory('m10')">
+                <div class="story-ring"><div class="story-img-box"><img src="m10"></div></div>
+                <div class="story-date-tag">أجمل لحظة</div>
+            </div>
+            <div class="story-item" onclick="openStory('m11')">
+                <div class="story-ring"><div class="story-img-box"><img src="m11"></div></div>
+                <div class="story-date-tag">ضحكتنا..💖</div>
+            </div>
+            <div class="story-item" onclick="openStory('m12')">
+                <div class="story-ring"><div class="story-img-box"><img src="m12"></div></div>
+                <div class="story-date-tag">سوا دايماً</div>
+            </div>
+            <div class="story-item" onclick="openStory('m13')">
+                <div class="story-ring"><div class="story-img-box"><img src="m13"></div></div>
+                <div class="story-date-tag">القمر 👀</div>
             </div>
         </div>
 
@@ -591,3 +612,4 @@
     </script>
 </body>
 </html>
+
