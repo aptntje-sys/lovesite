@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>💕Just For Us💕 </title>
+    <title>💕love site💕 </title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     <style>
         :root { 
@@ -188,6 +188,7 @@
             background: rgba(0, 0, 0, 0.85); transform: rotateY(180deg); color: var(--pink-glow); font-size: 13px; font-weight: 700; 
             border: 1.5px solid var(--pink-glow); line-height: 1.4; 
         }
+        .card-back video { width: 100%; height: 100%; object-fit: cover; border-radius: 18px; }
 
         @keyframes heartPulse { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
         .pulse-heart { font-size: 38px; animation: heartPulse 1.2s infinite; display: inline-block; cursor: pointer; margin-bottom: 5px; }
@@ -196,7 +197,7 @@
 
         .photo-list { width: 100%; max-width: 450px; }
         .photo-item { background: var(--glass); border-radius: 25px; padding: 12px; margin-bottom: 30px; border: 1px solid rgba(255, 133, 162, 0.2); }
-        .photo-item img { width: 100%; border-radius: 20px; }
+        .photo-item img, .photo-item video { width: 100%; border-radius: 20px; }
 
         #typewriter { line-height: 1.9; font-size: 18px; color: #fff; text-align: right; }
         .cursor::after { content: '|'; animation: blink 1s infinite; color: var(--pink-glow); }
@@ -341,11 +342,15 @@
             <div class="cards-container">
                 <div class="flip-card" onclick="this.classList.toggle('flipped')">
                     <div class="card-front">دوسي متخافيش..😂</div>
-                    <div class="card-back">مش بحب اشوفك زعلانه.!</div>
+                    <div class="card-back">
+                         <video loop muted playsinline onmouseover="this.play()" onmouseout="this.pause()"><source src="v1.mp4" type="video/mp4"></video>
+                    </div>
                 </div>
                 <div class="flip-card" onclick="this.classList.toggle('flipped')">
                     <div class="card-front">فاكرة اول مرة اتقابلنا!..</div>
-                    <div class="card-back">24/6/24<br>كانت اجمل لحظه!.. 😍</div>
+                    <div class="card-back">
+                        <video loop muted playsinline onmouseover="this.play()" onmouseout="this.pause()"><source src="v2.mp4" type="video/mp4"></video>
+                    </div>
                 </div>
                 <div class="flip-card" onclick="this.classList.toggle('flipped')">
                     <div class="card-front">دوسي كمان🫣</div>
@@ -416,6 +421,9 @@
 
         <h2 class="gold-title" style="margin-bottom: 30px;">فيه احلى من كد♥..</h2>
         <div class="photo-list">
+            <div class="photo-item"><video loop muted autoplay playsinline><source src="v3.mp4" type="video/mp4"></video><p>لحظة مابتتكررش 🎥💕</p></div>
+            <div class="photo-item"><video loop muted autoplay playsinline><source src="v4.mp4" type="video/mp4"></video><p>أحلى ضحكة شفتها 🎥✨</p></div>
+            
             <div class="photo-item"><img src="m1"><p>أول لحظة بينا🫣💕</p></div>
             <div class="photo-item"><img src="m2"><p>البدايات اللي منسيتهاش 🌍💕</p></div>
             <div class="photo-item"><img src="m3"><p>دايماً في قلبي💓😉</p></div>
@@ -624,3 +632,4 @@
     </script>
 </body>
 </html>
+
