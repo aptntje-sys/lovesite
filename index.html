@@ -104,7 +104,7 @@
         }
         .story-viewer.active { display: flex; animation: fadeIn 0.3s; }
         .view-content { width: 90%; max-width: 400px; position: relative; }
-        .view-content img { width: 100%; border-radius: 20px; border: 2px solid var(--pink-glow); box-shadow: 0 0 30px var(--pink-glow); }
+        .view-content img, .view-content video { width: 100%; border-radius: 20px; border: 2px solid var(--pink-glow); box-shadow: 0 0 30px var(--pink-glow); }
         .close-view { position: absolute; top: -50px; right: 0; font-size: 30px; color: white; cursor: pointer; }
 
         .custom-msg-box {
@@ -184,6 +184,8 @@
             background: var(--violet-pink); backdrop-filter: blur(15px); color: white; font-size: 15px; font-weight: 800; 
             box-shadow: 0 0 15px rgba(255, 20, 147, 0.3);
         }
+        .card-front video { width: 100%; height: 100%; object-fit: cover; border-radius: 18px; position: absolute; top:0; left:0; z-index: -1; }
+        
         .card-back { 
             background: rgba(0, 0, 0, 0.85); transform: rotateY(180deg); color: var(--pink-glow); font-size: 13px; font-weight: 700; 
             border: 1.5px solid var(--pink-glow); line-height: 1.4; 
@@ -196,7 +198,7 @@
 
         .photo-list { width: 100%; max-width: 450px; }
         .photo-item { background: var(--glass); border-radius: 25px; padding: 12px; margin-bottom: 30px; border: 1px solid rgba(255, 133, 162, 0.2); }
-        .photo-item img { width: 100%; border-radius: 20px; }
+        .photo-item img, .photo-item video { width: 100%; border-radius: 20px; }
 
         #typewriter { line-height: 1.9; font-size: 18px; color: #fff; text-align: right; }
         .cursor::after { content: '|'; animation: blink 1s infinite; color: var(--pink-glow); }
@@ -296,11 +298,6 @@
             max-width: 90%;
             text-align: right;
         }
-        
-        /* Video Card Styles */
-        .video-wrapper { width: 100%; height: 100%; position: relative; border-radius: 20px; overflow: hidden; }
-        .video-wrapper video { width: 100%; height: 100%; object-fit: cover; }
-        .video-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.2); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -311,9 +308,9 @@
     <div id="kissBtn" class="kiss-float" onclick="giveKiss()">💋</div>
 
     <div id="storyViewer" class="story-viewer" onclick="closeStory()">
-        <div class="view-content">
-            <span class="close-view">&times;</span>
-            <img id="viewImg" src="">
+        <div class="view-content" onclick="event.stopPropagation()">
+            <span class="close-view" onclick="closeStory()">&times;</span>
+            <div id="viewerMediaContainer"></div>
         </div>
     </div>
 
@@ -344,24 +341,18 @@
         <div class="glass-box" style="padding: 25px 15px;">
             <h3 style="color: var(--pink-glow); font-weight: 800; margin-bottom: 25px;"> Surprise 👀</h3>
             <div class="cards-container">
-                <div class="flip-card" id="videoCard" onclick="handleVideoCard(this)">
-                    <div class="card-front" style="padding:0;">
-                        <div class="video-wrapper">
-                            <video id="teaserVid" muted loop playsinline>
-                                <source src="v1.mp4" type="video/mp4">
-                            </video>
-                            <div class="video-overlay">شوفي الفيديو ده.. 🫣</div>
-                        </div>
+                <div class="flip-card" onclick="toggleCardVideo(this, 'v1.mp4')">
+                    <div class="card-front">
+                        <video src="v1.mp4" autoplay muted loop playsinline></video>
+                        <span style="position:relative; z-index:2;">دوسي متخافيش..😂</span>
                     </div>
-                    <div class="card-back" style="padding:0;">
-                        <video id="fullVid" playsinline style="width:100%; height:100%; border-radius:18px; object-fit:cover;">
-                            <source src="v1.mp4" type="video/mp4">
-                        </video>
-                    </div>
+                    <div class="card-back">مش بحب اشوفك زعلانه.!</div>
                 </div>
-
-                <div class="flip-card" onclick="this.classList.toggle('flipped')">
-                    <div class="card-front">فاكرة اول مرة اتقابلنا!..</div>
+                <div class="flip-card" onclick="toggleCardVideo(this, 'v2.mp4')">
+                    <div class="card-front">
+                        <video src="v2.mp4" autoplay muted loop playsinline></video>
+                        <span style="position:relative; z-index:2;">فاكرة اول مرة اتقابلنا!..</span>
+                    </div>
                     <div class="card-back">24/6/24<br>كانت اجمل لحظه!.. 😍</div>
                 </div>
                 <div class="flip-card" onclick="this.classList.toggle('flipped')">
@@ -397,35 +388,35 @@
         </div>
 
         <div class="stories-container">
-            <div class="story-item" onclick="openStory('m6')">
+            <div class="story-item" onclick="openStory('m6', 'img')">
                 <div class="story-ring"><div class="story-img-box"><img src="m6"></div></div>
                 <div class="story-date-tag">2/1/2022</div>
             </div>
-            <div class="story-item" onclick="openStory('m7')">
+            <div class="story-item" onclick="openStory('m7', 'img')">
                 <div class="story-ring"><div class="story-img-box"><img src="m7"></div></div>
                 <div class="story-date-tag">13/9/2022</div>
             </div>
-            <div class="story-item" onclick="openStory('m8')">
+            <div class="story-item" onclick="openStory('m8', 'img')">
                 <div class="story-ring"><div class="story-img-box"><img src="m8"></div></div>
                 <div class="story-date-tag">5/4/2023</div>
             </div>
-            <div class="story-item" onclick="openStory('m9')">
+            <div class="story-item" onclick="openStory('m9', 'img')">
                 <div class="story-ring"><div class="story-img-box"><img src="m9"></div></div>
                 <div class="story-date-tag">26/11/2023</div>
             </div>
-            <div class="story-item" onclick="openStory('m10')">
+            <div class="story-item" onclick="openStory('m10', 'img')">
                 <div class="story-ring"><div class="story-img-box"><img src="m10"></div></div>
                 <div class="story-date-tag">8/6/2024</div>
             </div>
-            <div class="story-item" onclick="openStory('m11')">
+            <div class="story-item" onclick="openStory('m11', 'img')">
                 <div class="story-ring"><div class="story-img-box"><img src="m11"></div></div>
                 <div class="story-date-tag">3/12/2024</div>
             </div>
-            <div class="story-item" onclick="openStory('m12')">
+            <div class="story-item" onclick="openStory('m12', 'img')">
                 <div class="story-ring"><div class="story-img-box"><img src="m12"></div></div>
                 <div class="story-date-tag">9/9/2025</div>
             </div>
-            <div class="story-item" onclick="openStory('m13')">
+            <div class="story-item" onclick="openStory('m13', 'img')">
                 <div class="story-ring"><div class="story-img-box"><img src="m13"></div></div>
                 <div class="story-date-tag">1/1/2026</div>
             </div>
@@ -433,10 +424,16 @@
 
         <h2 class="gold-title" style="margin-bottom: 30px;">فيه احلى من كد♥..</h2>
         <div class="photo-list">
-            <div class="photo-item"><img src="m1"><p>أول لحظة بينا🫣💕</p></div>
+            <div class="photo-item" onclick="openStory('v3.mp4', 'video')">
+                <video src="v3.mp4" muted loop autoplay playsinline></video>
+                <p>أول لحظة بينا🫣💕</p>
+            </div>
             <div class="photo-item"><img src="m2"><p>البدايات اللي منسيتهاش 🌍💕</p></div>
             <div class="photo-item"><img src="m3"><p>دايماً في قلبي💓😉</p></div>
-            <div class="photo-item"><img src="m4"><p>كل وقت معاكي مختلف🫵🏻🙃</p></div>
+            <div class="photo-item" onclick="openStory('v4.mp4', 'video')">
+                <video src="v4.mp4" muted loop autoplay playsinline></video>
+                <p>كل وقت معاكي مختلف🫵🏻🙃</p>
+            </div>
             <div class="photo-item"><img src="m5"><p>ديماً سوا👀</p></div>
         </div>
         <button class="fancy-trigger-btn" onclick="startFinalPage()">مفاجأه هنا🫣</button>
@@ -511,39 +508,8 @@
                 document.getElementById('backBtn').style.display = 'flex';
                 document.getElementById('kissBtn').style.display = 'flex';
                 document.getElementById('mBtnFixed').classList.remove('muted');
-                
-                // تشغيل فيديو التشويق
-                const teaser = document.getElementById('teaserVid');
-                teaser.play();
-                setInterval(() => {
-                    if(!document.getElementById('videoCard').classList.contains('flipped')){
-                        teaser.currentTime = 0;
-                        teaser.play();
-                    }
-                }, 3000);
-
                 setInterval(updateTimers, 1000);
             } else { alert("الباسورد غلط يا مزة.! 😉"); }
-        }
-
-        // دالة التحكم في كارت الفيديو
-        function handleVideoCard(card) {
-            const teaser = document.getElementById('teaserVid');
-            const full = document.getElementById('fullVid');
-            const mainAudio = document.getElementById('audio');
-            
-            card.classList.toggle('flipped');
-            
-            if(card.classList.contains('flipped')) {
-                teaser.pause();
-                if (!mainAudio.paused) { mainAudio.pause(); mainAudio.wasPlaying = true; }
-                full.currentTime = 0;
-                full.play();
-            } else {
-                full.pause();
-                teaser.play();
-                if (mainAudio.wasPlaying) mainAudio.play();
-            }
         }
 
         function showPage(id) {
@@ -632,6 +598,16 @@
             }
         }
 
+        function toggleCardVideo(card, videoSrc) {
+            const mainAudio = document.getElementById('audio');
+            card.classList.toggle('flipped');
+            
+            // لو الفلب كارد اتفتح، نفتح الفيديو في الفيور عشان يشتغل بصوت
+            if (card.classList.contains('flipped')) {
+               openStory(videoSrc, 'video');
+            }
+        }
+
         function openMagicLetter() {
             const randomMsg = randomQuotes[Math.floor(Math.random() * randomQuotes.length)];
             document.getElementById('msgText').innerText = randomMsg;
@@ -662,12 +638,39 @@
             }
         }
 
-        function openStory(img) {
-            document.getElementById('viewImg').src = img;
+        function openStory(src, type) {
+            const container = document.getElementById('viewerMediaContainer');
+            const mainAudio = document.getElementById('audio');
+            container.innerHTML = '';
+            
+            if (type === 'video') {
+                if (!mainAudio.paused) { mainAudio.pause(); mainAudio.wasPlaying = true; }
+                const video = document.createElement('video');
+                video.src = src;
+                video.controls = true;
+                video.autoplay = true;
+                video.style.width = '100%';
+                video.style.borderRadius = '20px';
+                container.appendChild(video);
+            } else {
+                const img = document.createElement('img');
+                img.src = src;
+                img.style.width = '100%';
+                img.style.borderRadius = '20px';
+                container.appendChild(img);
+            }
+            
             document.getElementById('storyViewer').classList.add('active');
         }
+
         function closeStory() {
+            const mainAudio = document.getElementById('audio');
             document.getElementById('storyViewer').classList.remove('active');
+            document.getElementById('viewerMediaContainer').innerHTML = '';
+            if (mainAudio.wasPlaying) {
+                mainAudio.play();
+                mainAudio.wasPlaying = false;
+            }
         }
     </script>
 </body>
